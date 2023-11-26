@@ -2,12 +2,9 @@ package study.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import study.base.Code;
-import study.base.ResponseDto;
+import study.apiPayload.ApiResponse;
 import study.converter.TempConverter;
-import study.service.TempService.TempCommandService;
 import study.service.TempService.TempQueryService;
-import study.web.dto.TempRequest;
 import study.web.dto.TempResponse;
 
 @RestController
@@ -18,14 +15,14 @@ public class TempRestController {
     private final TempQueryService tempQueryService;
 
     @GetMapping("/test")
-    public ResponseDto<TempResponse.TempTestDTO> testAPI(){
+    public ApiResponse<TempResponse.TempTestDTO> testAPI(){
 
-        return ResponseDto.onSuccess(TempConverter.toTempTestDTO(), Code.OK);
+        return ApiResponse.onSuccess(TempConverter.toTempTestDTO());
     }
 
     @GetMapping("/exception")
-    public ResponseDto<TempResponse.TempExceptionDTO> exceptionAPI(@RequestParam Integer flag){
+    public ApiResponse<TempResponse.TempExceptionDTO> exceptionAPI(@RequestParam Integer flag){
         tempQueryService.CheckFlag(flag);
-        return ResponseDto.onSuccess(TempConverter.toTempExceptionDTO(flag), Code.OK);
+        return ApiResponse.onSuccess(TempConverter.toTempExceptionDTO(flag));
     }
 }
